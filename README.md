@@ -31,3 +31,12 @@ Siga [ADMIN_SETUP.md](./ADMIN_SETUP.md) para criar a conta no Supabase Auth e vi
 - Antes de cadastrar pacientes reais, a clínica deve concluir avaliação de segurança, LGPD, retenção, consentimento, backup e procedimentos internos. Esta versão não é certificação de conformidade nem substitui avaliação profissional.
 
 As tabelas e políticas criadas para o ATENDIVOX são isoladas por prefixo e não alteram os dados dos outros aplicativos no mesmo projeto Supabase.
+
+
+## Simulador de treinamento
+- A aba **Jogo / Treinamento** oferece 1.000 personagens e casos fictícios gerados localmente no navegador.
+- Senhas de demonstração começam em CA545 e não são compartilhadas com a fila real.
+- Pontuação por escolha de fluxo: recepção, triagem, acionar equipe clínica ou sala de medicação mediante prescrição.
+- Preferências de voz (vozes em português disponíveis no dispositivo), velocidade da fala, leitura automática e legendas.
+- O simulador não grava pacientes fictícios no Supabase e não altera a fila da clínica.
+- Conteúdo educacional apenas para fluxo administrativo; não orienta diagnóstico, classificação clínica real ou prescrição.
