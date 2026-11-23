@@ -28,6 +28,30 @@ Se não inserir nenhuma linha, confirme se o usuário foi criado e se o e-mail e
 
 Depois que o administrador inicial estiver vinculado, cada profissional deve ter uma conta criada em Authentication → Users. Um administrador autorizado deve inserir o vínculo em `atendivox_staff`, definindo um destes papéis: `reception`, `triage`, `doctor` ou `nursing`. Para médico, pode preencher `room_id` com o ID do consultório correspondente. Para enfermagem, use `role = 'nursing'` e associe à Sala de Medicação se a configuração do profissional exigir uma sala.
 
+### Vincular profissional de enfermagem
+
+Depois de criar o usuário em Authentication → Users, execute o SQL abaixo substituindo o e-mail e o nome:
+
+```sql
+insert into public.atendivox_staff
+  (clinic_id, auth_user_id, display_name, role, room_id, active)
+select
+  'a7d1c0b1-3f4a-4f68-9d3a-6a1e2b7c9001'::uuid,
+  u.id,
+  'Nome do profissional',
+  'nursing',
+  r.id,
+  true
+from auth.users u
+left join public.atendivox_rooms r
+  on r.clinic_id = 'a7d1c0b1-3f4a-4f68-9d3a-6a1e2b7c9001'::uuid
+ and lower(r.name) = lower('Sala de Medicação')
+where lower(u.email) = lower('ENFERMAGEM@CLINICA.COM')
+on conflict do nothing;
+```
+
+A conta deve ser individual. Não compartilhe credenciais entre profissionais.
+
 ## Segurança e limites atuais
 
 - RLS está habilitado nas seis tabelas ATENDIVOX.
