@@ -1,19 +1,25 @@
 # ATENDIVOX
 
-Sistema de demonstração para fluxo de atendimento em clínica: recepção, triagem, fila médica, painel de TV e acompanhamento do paciente.
+Sistema web para fluxo de atendimento em clínica: recepção, triagem, fila médica e painel de chamadas.
 
-## Executar
-Abra `index.html` em um navegador moderno. O modo de demonstração salva os registros no armazenamento local do navegador. Duas abas no mesmo navegador recebem atualizações locais; isso **não** equivale à sincronização segura entre dispositivos diferentes.
+## Acessar
+Produção: https://atendivox.vercel.app
 
-## Backend
-Foi reservado um conjunto isolado de tabelas `atendivox_*` no projeto Supabase existente `vilsonmeira's Project`. As tabelas têm RLS ativado e permanecem sem políticas de acesso até que autenticação, papéis e autorização por clínica sejam implementados. Não desative RLS e não exponha chaves secretas no navegador.
+## Arquitetura atual
+- Frontend estático hospedado na Vercel e vinculado ao GitHub.
+- Supabase Auth com e-mail e senha para membros previamente vinculados à equipe.
+- Supabase Postgres com tabelas isoladas `atendivox_*` e Row Level Security habilitado.
+- Supabase Realtime para atualizar a fila em outros dispositivos.
+- Papéis: `admin`, `reception`, `triage` e `doctor`.
+- A função de emissão usa uma sequência do banco para gerar senhas sem colisões.
+- A chave publishable é a única chave Supabase presente no navegador; não há service-role key no frontend.
 
-## Próximas etapas obrigatórias antes de uso real
-1. Configurar Supabase Auth e perfis com papéis (admin, recepção, triagem, médico).
-2. Criar políticas RLS testadas por usuário e por clínica.
-3. Integrar operações de fila e Supabase Realtime.
-4. Criar links/QR individuais para pacientes sem expor dados pessoais.
-5. Validar privacidade, auditoria, backups e requisitos LGPD.
-6. Testar o fluxo em celulares, computador da recepção, TV e consultório.
+## Primeiro administrador
+Siga [ADMIN_SETUP.md](./ADMIN_SETUP.md) para criar a conta no Supabase Auth e vincular o primeiro administrador à clínica de demonstração. Sem esse vínculo, o login é recusado por segurança.
 
-**Aviso:** esta versão é um protótipo funcional local para demonstração, não está pronta para dados reais de pacientes ou operação clínica.
+## Limites desta entrega
+- A tela da TV usa login de um membro da equipe.
+- A gestão visual de usuários e o acompanhamento público do paciente por QR/link individual ainda não foram implementados.
+- Antes de cadastrar pacientes reais, a clínica deve concluir avaliação de segurança, LGPD, retenção, consentimento, backup e procedimentos internos. Esta versão não é certificação de conformidade nem substitui avaliação profissional.
+
+As tabelas e políticas criadas para o ATENDIVOX são isoladas por prefixo e não alteram os dados dos outros aplicativos no mesmo projeto Supabase.
