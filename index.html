@@ -39,7 +39,7 @@ async function boot(){
  const [cl,rm]=await Promise.all([db.from('atendivox_clinics').select('id,name').eq('id',staff.clinic_id).single(),db.from('atendivox_rooms').select('id,name,room_type').eq('clinic_id',staff.clinic_id).eq('active',true).order('name')]);
  if(cl.error||rm.error){setMessage('authMsg','Não foi possível carregar a clínica. Verifique as permissões.',true);return}
  clinic=cl.data;rooms=rm.data||[];$('clinicTag').textContent=clinic.name+' · '+staff.display_name;$('authScreen').classList.add('hidden');$('app').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');
- $('room').innerHTML=rooms.map(r=>'<option value="'+r.id+'">'+esc(r.name)+'</option>').join('');
+ $('room').innerHTML=rooms.filter(r=>r.room_type!=='medicacao').map(r=>'<option value="'+r.id+'">'+esc(r.name)+'</option>').join('');
  if(staff.room_id)$('room').value=staff.room_id;
  await loadData();
  if(channel)await db.removeChannel(channel);
