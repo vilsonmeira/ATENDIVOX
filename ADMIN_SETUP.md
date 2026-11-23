@@ -26,7 +26,7 @@ Se não inserir nenhuma linha, confirme se o usuário foi criado e se o e-mail e
 
 ## Adicionar profissionais
 
-Depois que o administrador inicial estiver vinculado, cada profissional deve ter uma conta criada em Authentication → Users. Um administrador autorizado deve inserir o vínculo em `atendivox_staff`, definindo um destes papéis: `reception`, `triage` ou `doctor`. Para médico, pode preencher `room_id` com o ID do consultório correspondente.
+Depois que o administrador inicial estiver vinculado, cada profissional deve ter uma conta criada em Authentication → Users. Um administrador autorizado deve inserir o vínculo em `atendivox_staff`, definindo um destes papéis: `reception`, `triage`, `doctor` ou `nursing`. Para médico, pode preencher `room_id` com o ID do consultório correspondente. Para enfermagem, use `role = 'nursing'` e associe à Sala de Medicação se a configuração do profissional exigir uma sala.
 
 ## Segurança e limites atuais
 
