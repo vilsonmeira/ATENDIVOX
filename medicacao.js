@@ -70,6 +70,7 @@ function renderMedication() {
       .on('postgres_changes',{event:'*',schema:'public',table:'atendivox_medication_orders',filter:'clinic_id=eq.'+staff.clinic_id},refreshMedicationData)
       .on('postgres_changes',{event:'*',schema:'public',table:'atendivox_medication_administrations',filter:'clinic_id=eq.'+staff.clinic_id},refreshMedicationData)
       .subscribe();
+    refreshMedicationData();
   }
 }
 
